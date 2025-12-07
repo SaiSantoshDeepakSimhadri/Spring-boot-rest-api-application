@@ -31,7 +31,7 @@ public class ProductService {
     }
     //get all the products
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        return productRepository.findAll().stream().toList();
     }
 
     //get products by their id
@@ -41,17 +41,22 @@ public class ProductService {
 
     //get products by category
     public List<Product> getProductsByCategory(String category) {
-        return productRepository.findProductByCategory(category);
+        return productRepository.findProductByCategoryContainingIgnoreCase(category).stream().toList();
     }
 
-    //get products by price
+    //get products by price (less than or equal)
     public List<Product> getProductsByPriceLessThanEqual(Double price) {
-        return productRepository.findProductByPriceLessThanEqual(price);
+        return productRepository.findProductByPriceLessThanEqual(price).stream().toList();
+    }
+
+    //get products by price (greater than or equal)
+    public List<Product> getProductsByPriceGreaterThanEqual(Double price) {
+        return productRepository.findProductByPriceGreaterThanEqual(price).stream().toList();
     }
 
     //get product by name
     public List<Product> getProductsByName(String name) {
-        return productRepository.findProductByNameContainingIgnoreCase(name);
+        return productRepository.findProductByNameContainingIgnoreCase(name).stream().toList();
     }
 
     //save the created product
@@ -61,7 +66,7 @@ public class ProductService {
 
     //save the created products (one or more)
     public List<Product> saveProducts(List<Product> productList) {
-        return productRepository.saveAll(productList);
+        return productRepository.saveAll(productList).stream().toList();
     }
 
     //delete a product
@@ -82,37 +87,36 @@ public class ProductService {
         }
     }
 
-    @PostConstruct
-    public void restoreProducts() {
-        File file = new File(BACKUP_FILE);
-        if (!file.exists()) {
-            System.out.println("ℹ️ No backup file found — skipping restore.");
-            return;
-        }
-
-        System.out.println("♻️ Restoring products from backup...");
-        try {
-            List<Product> products = objectMapper.readValue(
-                    file,
-                    objectMapper.getTypeFactory().constructCollectionType(List.class, Product.class)
-            );
-
-            // Clear existing products to prevent ID conflicts
-            productRepository.deleteAllInBatch();
-
-            // Reset IDs to avoid merge issues (let the DB auto-generate)
-            for (Product p : products) {
-                p.setId(null);
-            }
-
-            productRepository.saveAll(products);
-            System.out.println("✅ Products restored successfully from backup!");
-
-        } catch (IOException e) {
-            System.err.println("❌ Failed to restore products: " + e.getMessage());
-        } catch (Exception ex) {
-            System.err.println("⚠️ Unexpected error during restore: " + ex.getMessage());
-        }
-    }
+    // Commenting this, as the code has bug that rewrites the IDs of each product in DB on every startup.
+//    @PostConstruct
+//    public void restoreProducts() {
+//        File file = new File(BACKUP_FILE);
+//        if (!file.exists()) {
+//            System.out.println("ℹ️ No backup file found — skipping restore.");
+//            return;
+//        }
+//
+//        System.out.println("♻️ Restoring products from backup...");
+//        try {
+//            List<Product> products = objectMapper.readValue(
+//                    file,
+//                    objectMapper.getTypeFactory().constructCollectionType(List.class, Product.class)
+//            );
+//
+//            // Clear existing products to prevent ID conflicts
+//            productRepository.deleteAllInBatch();
+//
+//            // Reset IDs to avoid merge issues (let the DB auto-generate)
+//            products.forEach(p -> p.setId(null));
+//
+//            productRepository.saveAll(products);
+//            System.out.println("✅ Products restored successfully from backup!");
+//
+//        } catch (IOException e) {
+//            System.err.println("❌ Failed to restore products: " + e.getMessage());
+//        } catch (Exception ex) {
+//            System.err.println("⚠️ Unexpected error during restore: " + ex.getMessage());
+//        }
+//    }
 
 }

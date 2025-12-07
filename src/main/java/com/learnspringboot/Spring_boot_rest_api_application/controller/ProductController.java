@@ -46,9 +46,14 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductsByCategory(categoryName));
     }
 
-    @GetMapping("/price/{maxPrice}")
+    @GetMapping("/price/max/{maxPrice}")
     public ResponseEntity<List<Product>> getProductsByMaxPrice(@PathVariable Double maxPrice) {
         return ResponseEntity.ok(productService.getProductsByPriceLessThanEqual(maxPrice));
+    }
+
+    @GetMapping("/price/min/{minPrice}")
+    public ResponseEntity<List<Product>> getProductsByMinPrice(@PathVariable Double minPrice) {
+        return ResponseEntity.ok(productService.getProductsByPriceGreaterThanEqual(minPrice));
     }
 
     @GetMapping("/search")
@@ -56,12 +61,8 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductsByName(name));
     }
 
-    //add new product
+    //add new product or products
     @PostMapping
-//    public ResponseEntity<?> createProduct(@RequestBody Product product)throws IOException {
-//        Product newProduct = productService.saveProduct(product);
-//        return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
-        // Try to detect if JSON is an array or single object
     public ResponseEntity<?> createProduct(@RequestBody String products)throws IOException {
         products = products.trim();
 
@@ -95,6 +96,6 @@ public class ProductController {
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         Product productToDelete = productService.getProductById(id).orElseThrow(() -> new RuntimeException("Product not found"));
         productService.deleteProduct(productToDelete);
-        return ResponseEntity.ok("Product Deleted");
+        return ResponseEntity.ok("Product id: "+productToDelete.getId()+", name: "+productToDelete.getName()+", Deleted");
     }
 }

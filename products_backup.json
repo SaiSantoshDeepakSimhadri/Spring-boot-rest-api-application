@@ -1,73 +1,79 @@
 [ {
-  "id" : 13,
+  "id" : 1,
   "name" : "Samsung S25 Ultra",
   "description" : "A flagship smartphone with cutting edge AI features at a Premium Price",
   "price" : 1999.99,
   "category" : "Smartphone"
 }, {
-  "id" : 14,
+  "id" : 2,
   "name" : "Asus ROG Strix 20",
   "description" : "A flagship Laptop with cutting edge AI features and powerful performance at a Premium Price",
   "price" : 3999.99,
   "category" : "Laptop"
 }, {
-  "id" : 15,
+  "id" : 3,
   "name" : "IQOO NEO 10 pro",
   "description" : "A powerful gaming smartphone at budget Price",
   "price" : 999.99,
   "category" : "Smartphone"
 }, {
-  "id" : 16,
+  "id" : 4,
   "name" : "Bajaj Oven 20L",
   "description" : "A powerful multipuprpose oven at budget Price",
   "price" : 499.99,
   "category" : "Kitchen"
 }, {
-  "id" : 17,
+  "id" : 5,
   "name" : "Modern Sofaset of 6",
   "description" : "A Comfortable sofaset for maximum 6 occupancy",
   "price" : 1000.0,
   "category" : "Furniture"
 }, {
-  "id" : 18,
+  "id" : 6,
   "name" : "Asus ROG Strix 20",
   "description" : "A productivity Laptop at a budget price",
   "price" : 1799.99,
   "category" : "Laptop"
 }, {
-  "id" : 19,
+  "id" : 7,
   "name" : "Samsung S26 Ultra",
   "description" : "A flagship smartphone with cutting edge AI features at a Premium Price (pre-book)",
   "price" : 1799.99,
   "category" : "Smartphone"
 }, {
-  "id" : 20,
+  "id" : 8,
   "name" : "Asus ROG Strix XXI",
   "description" : "A flagship Laptop with cutting edge AI features and powerful performance at a Premium Price (pre-book)",
   "price" : 3799.99,
   "category" : "Laptop"
 }, {
-  "id" : 21,
+  "id" : 9,
   "name" : "IQOO NEO 11 pro",
   "description" : "A powerful gaming smartphone at budget Price (pre-book)",
   "price" : 899.99,
   "category" : "Smartphone"
 }, {
-  "id" : 22,
+  "id" : 10,
   "name" : "Bajaj Geyser 20L X",
   "description" : "A powerful Geyser at budget Price",
   "price" : 99.99,
   "category" : "Utility"
 }, {
-  "id" : 23,
+  "id" : 11,
   "name" : "Modern King Size Bed",
   "description" : "A Comfortable Bed for maximum 3 people",
   "price" : 2999.99,
   "category" : "Furniture"
 }, {
-  "id" : 24,
+  "id" : 12,
   "name" : "Asus TUF XX",
   "description" : "A Gaming Laptop at a budget price",
   "price" : 1499.99,
   "category" : "Laptop"
+}, {
+  "id" : 14,
+  "name" : "Asus Zenfone",
+  "description" : "A Gaming Smartphone at a Premium price",
+  "price" : 1599.99,
+  "category" : "Smartphone"
 } ]

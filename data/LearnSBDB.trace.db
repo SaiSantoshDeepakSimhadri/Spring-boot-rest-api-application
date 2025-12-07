@@ -1,4 +1,7 @@
-2025-11-03 00:36:02.535501+05:30 jdbc[3]: exception
+2025-12-07 15:54:21.770903+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCTS" not found (this database is empty); SQL statement:
+select p1_0.id,p1_0.category,p1_0.description,p1_0.name,p1_0.price from products p1_0 [42104-240]
+2025-12-07 16:24:53.237874+05:30 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUCTS" already exists; SQL statement:
 
     create table products (
