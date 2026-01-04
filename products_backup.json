@@ -70,10 +70,4 @@
   "description" : "A Gaming Laptop at a budget price",
   "price" : 1499.99,
   "category" : "Laptop"
-}, {
-  "id" : 14,
-  "name" : "Asus Zenfone",
-  "description" : "A Gaming Smartphone at a Premium price",
-  "price" : 1599.99,
-  "category" : "Smartphone"
 } ]
