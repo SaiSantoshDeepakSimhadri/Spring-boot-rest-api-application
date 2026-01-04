@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.web.WebProperties;
 @Entity
 @Access(AccessType.FIELD)  // 👈 ensures Hibernate reads field order as declared
 @Table(name = "products")
-public class Product {
+public class
+Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
