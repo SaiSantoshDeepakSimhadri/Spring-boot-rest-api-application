@@ -183,6 +183,48 @@ public class ProductApiDelegateImplTest {
         assertThat(resp.getBody()).isEqualTo(savedDto);
     }
 
+    // New tests for createProductException
+    @Test
+    void createSingleProductReturnsCreatedDtoException() throws Exception {
+//        Product incoming = new Product("NewProd","descr",12.5,"gadgets");
+//        ProductDto incomingDto = objectMapper.convertValue(incoming, ProductDto.class);
+
+//        Product entity = new Product("NewProd","descr",12.5,"gadgets");
+//        Product saved = new Product("NewProd","descr",12.5,"gadgets"); saved.setId(21L);
+//        ProductDto savedDto = objectMapper.convertValue(saved, ProductDto.class);
+
+//        String body = objectMapper.writeValueAsString(incomingDto);
+        String body = "{ invalid json ";
+//        when(productMapper.toEntity(incomingDto)).thenReturn(entity);
+//        when(productService.saveProduct(entity)).thenReturn(saved);
+//        when(productMapper.toDto(saved)).thenReturn(savedDto);
+
+        ResponseEntity<Object> resp = delegate.createProduct(body);
+        assertThat(resp.getStatusCodeValue()).isEqualTo(400);
+//        assertThat(resp.getBody()).isEqualTo(savedDto);
+    }
+
+    // New tests for createProductException
+    @Test
+    void createSingleProductReturnsCreatedDtoException2() throws Exception {
+//        Product incoming = new Product("NewProd","descr",12.5,"gadgets");
+//        ProductDto incomingDto = objectMapper.convertValue(incoming, ProductDto.class);
+
+//        Product entity = new Product("NewProd","descr",12.5,"gadgets");
+//        Product saved = new Product("NewProd","descr",12.5,"gadgets"); saved.setId(21L);
+//        ProductDto savedDto = objectMapper.convertValue(saved, ProductDto.class);
+
+//        String body = objectMapper.writeValueAsString(incomingDto);
+        String body = null;
+//        when(productMapper.toEntity(incomingDto)).thenReturn(entity);
+//        when(productService.saveProduct(entity)).thenReturn(saved);
+//        when(productMapper.toDto(saved)).thenReturn(savedDto);
+
+        ResponseEntity<Object> resp = delegate.createProduct(body);
+        assertThat(resp.getStatusCodeValue()).isEqualTo(400);
+//        assertThat(resp.getBody()).isEqualTo(savedDto);
+    }
+
     @Test
     void createMultipleProductsReturnsCreatedDtos() throws Exception {
         Product p1 = new Product("P1","d1",5.0,"c1");
