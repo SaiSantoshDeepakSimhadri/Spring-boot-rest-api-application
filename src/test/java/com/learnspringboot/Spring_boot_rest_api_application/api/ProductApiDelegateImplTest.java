@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-public class ProductApiDelegateImplTest {
+class ProductApiDelegateImplTest {
 
     @Mock
     private ProductService productService;
@@ -179,50 +180,26 @@ public class ProductApiDelegateImplTest {
         when(productMapper.toDto(saved)).thenReturn(savedDto);
 
         ResponseEntity<Object> resp = delegate.createProduct(body);
-        assertThat(resp.getStatusCodeValue()).isEqualTo(201);
+        assertThat(resp.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(201));
         assertThat(resp.getBody()).isEqualTo(savedDto);
     }
 
     // New tests for createProductException
     @Test
-    void createSingleProductReturnsCreatedDtoException() throws Exception {
-//        Product incoming = new Product("NewProd","descr",12.5,"gadgets");
-//        ProductDto incomingDto = objectMapper.convertValue(incoming, ProductDto.class);
+    void createSingleProductReturnsCreatedDtoException()  {
 
-//        Product entity = new Product("NewProd","descr",12.5,"gadgets");
-//        Product saved = new Product("NewProd","descr",12.5,"gadgets"); saved.setId(21L);
-//        ProductDto savedDto = objectMapper.convertValue(saved, ProductDto.class);
-
-//        String body = objectMapper.writeValueAsString(incomingDto);
         String body = "{ invalid json ";
-//        when(productMapper.toEntity(incomingDto)).thenReturn(entity);
-//        when(productService.saveProduct(entity)).thenReturn(saved);
-//        when(productMapper.toDto(saved)).thenReturn(savedDto);
 
         ResponseEntity<Object> resp = delegate.createProduct(body);
-        assertThat(resp.getStatusCodeValue()).isEqualTo(400);
-//        assertThat(resp.getBody()).isEqualTo(savedDto);
+        assertThat(resp.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(400));
     }
 
     // New tests for createProductException
     @Test
-    void createSingleProductReturnsCreatedDtoException2() throws Exception {
-//        Product incoming = new Product("NewProd","descr",12.5,"gadgets");
-//        ProductDto incomingDto = objectMapper.convertValue(incoming, ProductDto.class);
-
-//        Product entity = new Product("NewProd","descr",12.5,"gadgets");
-//        Product saved = new Product("NewProd","descr",12.5,"gadgets"); saved.setId(21L);
-//        ProductDto savedDto = objectMapper.convertValue(saved, ProductDto.class);
-
-//        String body = objectMapper.writeValueAsString(incomingDto);
+    void createSingleProductReturnsCreatedDtoException2()  {
         String body = null;
-//        when(productMapper.toEntity(incomingDto)).thenReturn(entity);
-//        when(productService.saveProduct(entity)).thenReturn(saved);
-//        when(productMapper.toDto(saved)).thenReturn(savedDto);
-
         ResponseEntity<Object> resp = delegate.createProduct(body);
-        assertThat(resp.getStatusCodeValue()).isEqualTo(400);
-//        assertThat(resp.getBody()).isEqualTo(savedDto);
+        assertThat(resp.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(400));
     }
 
     @Test
@@ -248,7 +225,7 @@ public class ProductApiDelegateImplTest {
         when(productMapper.toDto(s2)).thenReturn(sd2);
 
         ResponseEntity<Object> resp = delegate.createProduct(body);
-        assertThat(resp.getStatusCodeValue()).isEqualTo(201);
+        assertThat(resp.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(201));
         assertThat(resp.getBody()).isInstanceOf(List.class);
         List<?> list = (List<?>) resp.getBody();
         assertThat(list).hasSize(2);
