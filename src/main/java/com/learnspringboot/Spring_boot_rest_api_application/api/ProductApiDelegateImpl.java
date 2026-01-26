@@ -8,11 +8,14 @@ import com.learnspringboot.Spring_boot_rest_api_application.service.ProductServi
 import com.learnspringboot.api.ProductApiDelegate;
 import com.learnspringboot.model.ProductDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,14 +37,14 @@ public class ProductApiDelegateImpl implements ProductApiDelegate {
                 .stream()
                 .map(productMapper::toDto)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(dtos);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(dtos);
     }
 
     @Override
     public ResponseEntity<ProductDto> getProductById(Long id) {
         return productService.getProductById(id)
                 .map(productMapper::toDto)
-                .map(p -> ResponseEntity.ok(p))
+                .map(p -> ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(p))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -51,7 +54,7 @@ public class ProductApiDelegateImpl implements ProductApiDelegate {
                 .stream()
                 .map(productMapper::toDto)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(dtos);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(dtos);
     }
 
     @Override
@@ -60,7 +63,7 @@ public class ProductApiDelegateImpl implements ProductApiDelegate {
                 .stream()
                 .map(productMapper::toDto)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(dtos);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(dtos);
     }
 
     @Override
@@ -69,7 +72,7 @@ public class ProductApiDelegateImpl implements ProductApiDelegate {
                 .stream()
                 .map(productMapper::toDto)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(dtos);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(dtos);
     }
 
     @Override
@@ -78,7 +81,7 @@ public class ProductApiDelegateImpl implements ProductApiDelegate {
                 .stream()
                 .map(productMapper::toDto)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(dtos);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(dtos);
     }
 
     @Override
@@ -92,27 +95,30 @@ public class ProductApiDelegateImpl implements ProductApiDelegate {
                         .collect(Collectors.toList());
                 List<Product> saved = productService.saveProducts(entities);
                 List<ProductDto> result = saved.stream().map(productMapper::toDto).collect(Collectors.toList());
-                return new ResponseEntity<>(result, HttpStatus.CREATED);
+                return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(result);
             } else {
                 ProductDto dto = objectMapper.readValue(trimmed, ProductDto.class);
                 Product entity = productMapper.toEntity(dto);
                 Product saved = productService.saveProduct(entity);
                 ProductDto result = productMapper.toDto(saved);
-                return new ResponseEntity<>(result, HttpStatus.CREATED);
+                return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(result);
             }
         } catch (IOException e) {
-            return new ResponseEntity<>("Invalid JSON: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.TEXT_PLAIN).body("Invalid JSON: " + e.getMessage());
         }
     }
 
     @Override
     public ResponseEntity<Object> deleteProduct(Long id) {
-        return productService.getProductById(id)
-                .map(product -> {
-                    productService.deleteProduct(product);
-                    return new ResponseEntity<Object>(HttpStatus.OK);
-                })
-                .orElse(ResponseEntity.notFound().build());
+        Optional<Product> opt = productService.getProductById(id);
+        if (opt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        productService.deleteProduct(opt.get());
+        String msg = "Product with id " + id + " has been deleted";
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Map.of("message", msg));
     }
 
     @Override
@@ -127,7 +133,7 @@ public class ProductApiDelegateImpl implements ProductApiDelegate {
                     Product saved = productService.saveProduct(existing);
                     return productMapper.toDto(saved);
                 })
-                .map(p -> ResponseEntity.ok(p))
+                .map(p -> ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(p))
                 .orElse(ResponseEntity.notFound().build());
     }
 }
